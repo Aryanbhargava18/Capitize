@@ -19,7 +19,7 @@ const Header = async () => {
             width={200}
             height={60}
             className="h-12 w-auto object-contain"
-          />
+          /> 
         </Link>
 
         {/* Navigation Links - Different for signed in/out users */}
@@ -38,7 +38,7 @@ const Header = async () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-6">
           <SignedIn>
             <Link
               href="/dashboard"
