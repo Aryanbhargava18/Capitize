@@ -1,25 +1,8 @@
-# Full Stack AI Fianace Platform with Next JS, Supabase, Tailwind, Prisma, Inngest, ArcJet, Shadcn UI Tutorial 🔥🔥
-## https://youtu.be/egS6fnZAdzk
+Ai Finance Mananger(Capitize)
 
-<img width="1470" alt="Screenshot 2024-12-10 at 9 45 45 AM" src="https://github.com/user-attachments/assets/1bc50b85-b421-4122-8ba4-ae68b2b61432">
+Tech Stack: Next.js 15, React.js 19, Tailwind CSS, Shadcn UI, Prisma (PostgreSQL), Inngest, Clerk, Gemini API,
+Resend, Arcjet
 
-### Make sure to create a `.env` file with following variables -
+Description: A full-stack AI-driven finance platform enabling users to link multiple bank accounts, scan receipts with AI, and generate automated monthly reports enriched with intelligent insights.
 
-```
-DATABASE_URL=
-DIRECT_URL=
-
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
-
-GEMINI_API_KEY=
-
-RESEND_API_KEY=
-
-ARCJET_KEY=
-```
- 
+Features: Secure user authentication via Clerk; seamless bank-account integration and transaction categorization; AI-powered receipt scanning and data extraction using the Gemini API; automated, background-processed monthly reporting with Inngest; real-time interactive charts and analytics; budget tracking with alerts; recurring transaction management; and robust security and rate limiting powered by Arcjet, with email notifications handled by Resend.
