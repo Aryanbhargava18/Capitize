@@ -302,8 +302,11 @@ const LandingPage = () => {
                     ))}
                   </div>
                   <p className="text-gray-700 mb-6 leading-relaxed italic">
-                    "{testimonial.quote}"
-                  </p>
+  {'“'}
+  {testimonial.quote}
+  {'”'}
+</p>
+
                   <div className="flex items-center gap-4">
                     <Image
                       src={testimonial.image}
