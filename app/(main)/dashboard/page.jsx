@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { DashboardOverview } from "./_components/transaction-overview";
 import { DatabaseError } from "@/components/database-error";
+export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const [accountsResult, transactionsResult] = await Promise.all([
