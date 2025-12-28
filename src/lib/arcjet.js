@@ -1,4 +1,4 @@
-import arcjet, { tokenBucket } from "@arcjet/next";
+import arcjet, { tokenBucket, shield, detectBot } from "@arcjet/next";
 
 const aj = arcjet({
   key: process.env.ARCJET_KEY,
@@ -10,6 +10,20 @@ const aj = arcjet({
       refillRate: 10, // 10 collections
       interval: 3600, // per hour
       capacity: 10, // maximum burst capacity
+    }),
+  ],
+});
+
+export const botAj = arcjet({
+  key: process.env.ARCJET_KEY,
+  rules: [
+    shield({ mode: "LIVE" }),
+    detectBot({
+      mode: "LIVE",
+      allow: [
+        "CATEGORY:SEARCH_ENGINE",
+        "GO_HTTP",
+      ],
     }),
   ],
 });

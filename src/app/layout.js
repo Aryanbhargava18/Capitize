@@ -5,6 +5,8 @@ import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { CurrencyProvider } from "@/contexts/currency-context";
+import { botAj } from "@/lib/arcjet";
+import { request } from "@arcjet/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +15,29 @@ export const metadata = {
   description: "AI-Powered Financial Management Platform - Take control of your finances with intelligence",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const req = await request();
+  const decision = await botAj.protect(req);
+
+  if (decision.isDenied()) {
+    return (
+      <html lang="en">
+        <body className={inter.className}>
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+              <p className="text-gray-600">
+                {decision.reason.isBot()
+                  ? "Bot activity detected."
+                  : "Your request has been blocked."}
+              </p>
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <ClerkProvider>
       <CurrencyProvider>
