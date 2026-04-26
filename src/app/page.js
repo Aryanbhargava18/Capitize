@@ -3,24 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import Link from "next/link";
 
-const testimonials = [
-  { initials: "SW", name: "Sanath Waraikar", role: "Small Business Owner", quote: "Capitize has transformed how I manage my business finances. The AI insights have helped me identify cost-saving opportunities I never knew existed.", rating: 5 },
-  { initials: "HK", name: "Harshit Kudhial", role: "Freelancer", quote: "The receipt scanning feature saves me hours each month. Now I can focus on my work instead of manual data entry and expense tracking.", rating: 5 },
-  { initials: "PT", name: "Prajjwal Tripathi", role: "Freelancer", quote: "I recommend Capitize to all my clients. The multi-currency support and detailed analytics make it perfect for international clients.", rating: 5 },
-];
+
 
 export default function LandingPage() {
   const canvasRef = useRef(null);
   const [loaded, setLoaded] = useState(0);
   const [loaderHidden, setLoaderHidden] = useState(false);
-  const [testimonialIdx, setTestimonialIdx] = useState(0);
-  const sceneRef = useRef({});
 
-  // Auto-rotate testimonials
-  useEffect(() => {
-    const iv = setInterval(() => setTestimonialIdx(i => (i + 1) % 3), 5000);
-    return () => clearInterval(iv);
-  }, []);
 
   // Fallback loader timeout
   useEffect(() => {
@@ -205,12 +194,11 @@ export default function LandingPage() {
       window.removeEventListener("mousemove", onCursorMove);
       window.removeEventListener("resize", onResize);
       renderer.dispose();
-      
+
       if (ctx) ctx.revert();
     };
   }, [loaded]);
 
-  const t = testimonials[testimonialIdx];
 
   return (
     <>
@@ -233,7 +221,7 @@ export default function LandingPage() {
           <Link href="/" className="cap-logo">Capitize<span className="dot">.</span></Link>
           <ul className="cap-nav-links">
             <li><a href="#features">Features</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#how">How it Works</a></li>
           </ul>
           <Link href="/dashboard" className="cap-btn cap-btn-cta" style={{ color: "#f0f0f5" }}>Get Started →</Link>
         </div>
@@ -246,14 +234,14 @@ export default function LandingPage() {
           <div>
             <div className="cap-eyebrow"><span className="blink" /> AI-Powered Financial Intelligence</div>
             <h1 className="cap-headline">
-              <span className="word block">Take Control of</span>
-              <span className="word block mt-2">Your Finances</span>
-              <span className="word block mt-2">with AI</span>
+              <span className="word block">Every Transaction</span>
+              <span className="word block mt-2">Tells a Story.</span>
+              <span className="word block mt-2">Let AI Write Yours.</span>
             </h1>
-            <p className="cap-subheadline">Transform your financial future with intelligent insights, automated tracking, and smart budgeting powered by cutting-edge AI technology.</p>
+            <p className="cap-subheadline">Move beyond simple expense tracking. Capitize uses cutting-edge AI to understand your financial behavior, uncovering hidden patterns and building a roadmap to your wealth.</p>
             <div className="cap-hero-ctas">
               <Link href="/dashboard" className="cap-btn cap-btn-primary">Get Started →</Link>
-        
+
             </div>
           </div>
           <div className="cap-float-card">
@@ -262,7 +250,7 @@ export default function LandingPage() {
             <div><span className="label">Balance</span><div className="value">₹2,45,800</div></div>
           </div>
         </div>
-        <div className="cap-scroll-indicator"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b6b80" strokeWidth="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg></div>
+        <div className="cap-scroll-indicator"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b6b80" strokeWidth="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5" /></svg></div>
       </section>
 
       {/* Marquee */}
@@ -270,7 +258,7 @@ export default function LandingPage() {
         <div className="cap-marquee-track">
           {[...Array(2)].map((_, k) => (
             <React.Fragment key={k}>
-              {["4.9★ Rating", "50K+ Users", "₹10Cr+ Tracked", "Bank-Grade Security", "AI Insights", "Zero Data Sold"].map((s, i) => (
+              {["Real-Time Tracking", "AI Pattern Recognition", "Bank-Grade Encryption", "Automated Budgeting", "Multi-Currency", "Zero Data Sold"].map((s, i) => (
                 <React.Fragment key={i}><span className="cap-marquee-item">{s}</span><span className="cap-marquee-sep">◆</span></React.Fragment>
               ))}
             </React.Fragment>
@@ -281,37 +269,37 @@ export default function LandingPage() {
       {/* Features Bento */}
       <section className="cap-features" id="features">
         <div className="cap-features-inner">
-          <h2 className="cap-section-title">Everything You Need to Master Your Finances</h2>
+          <h2 className="cap-section-title">The Tools to Forge Your Financial Future</h2>
           <div className="cap-bento">
             <div className="cap-bento-card card-1">
-              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-              <h3>Advanced Analytics</h3>
-              <p>Get detailed insights into your spending patterns with AI-powered analytics and predictive modeling.</p>
+              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
+              <h3>See the Unseen</h3>
+              <p>Your spending isn't just numbers. It's a narrative. Our AI connects the dots, predicting trends before they happen.</p>
               <div style={{ display: "flex", gap: "8px", alignItems: "flex-end", marginTop: "1.5rem", height: "60px" }}>
                 {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (<div key={i} style={{ flex: 1, height: h + "%", background: `linear-gradient(to top, #00f5c4, #7c3aed)`, borderRadius: "4px", opacity: 0.7 }} />))}
               </div>
             </div>
             <div className="cap-bento-card card-2" style={{ position: "relative" }}>
-              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 9v4m-2-2h4"/></svg></div>
-              <h3>Smart Receipt Scanner</h3>
-              <p>Extract data automatically from receipts using advanced AI technology.</p>
+              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M12 9v4m-2-2h4" /></svg></div>
+              <h3>Effortless Capture</h3>
+              <p>Turn paper into data instantly. Just scan, and let our neural network extract every detail.</p>
               <div className="scan-line" />
             </div>
             <div className="cap-bento-card">
-              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg></div>
-              <h3>Intelligent Budgeting</h3>
-              <p>Create and manage budgets with AI recommendations.</p>
+              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 2a10 10 0 0 1 0 20" /></svg></div>
+              <h3>Budgets that Breathe</h3>
+              <p>Static budgets fail. Our AI dynamically adjusts your goals based on your real-time financial rhythm.</p>
               <div className="cap-donut" style={{ marginTop: "1rem" }}><div className="cap-donut-inner" /></div>
             </div>
             <div className="cap-bento-card">
-              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
-              <h3>Multi-Account Support</h3>
-              <p>Manage multiple accounts in one unified dashboard.</p>
+              <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg></div>
+              <h3>One Unified View</h3>
+              <p>All your financial lives, synchronized perfectly in a single, panoramic dashboard.</p>
             </div>
             <div className="cap-bento-card">
-              <div className="cap-bento-icon"><svg className="spin-slow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg></div>
-              <h3>Multi-Currency</h3>
-              <p>Support for multiple currencies with real-time conversion.</p>
+              <div className="cap-bento-icon"><svg className="spin-slow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z" /></svg></div>
+              <h3>Borderless Wealth</h3>
+              <p>Travel and transact globally. We handle the conversions, so your money always speaks your language.</p>
             </div>
           </div>
         </div>
@@ -321,9 +309,9 @@ export default function LandingPage() {
       <section className="cap-how" id="how">
         <div className="cap-how-track">
           {[
-            { step: "01", title: "Connect Your Accounts", desc: "Link your bank accounts securely in minutes with our bank-grade encryption.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><rect x="10" y="20" width="25" height="40" rx="4"/><rect x="45" y="20" width="25" height="40" rx="4"/><path d="M35 40h10" strokeDasharray="4 4"/></svg> },
-            { step: "02", title: "AI Analyzes Everything", desc: "Our neural networks categorize and analyze every transaction in real-time.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#7c3aed" strokeWidth="1.5"><circle cx="40" cy="25" r="6"/><circle cx="25" cy="45" r="6"/><circle cx="55" cy="45" r="6"/><circle cx="40" cy="60" r="6"/><path d="M40 31v23M31 45h18M34 39l-6 3M46 39l6 3"/></svg> },
-            { step: "03", title: "Get Smart Insights", desc: "Receive actionable AI-powered insights and recommendations to optimize your finances.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><polyline points="10,60 25,45 35,50 50,30 65,35 75,20" strokeLinejoin="round"/></svg> }
+            { step: "01", title: "The Connection", desc: "Securely link your financial ecosystem. Bank-grade encryption ensures your peace of mind from day one.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><rect x="10" y="20" width="25" height="40" rx="4" /><rect x="45" y="20" width="25" height="40" rx="4" /><path d="M35 40h10" strokeDasharray="4 4" /></svg> },
+            { step: "02", title: "The Analysis", desc: "Our AI quietly goes to work, organizing chaos into order, categorizing every transaction with deep precision.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#7c3aed" strokeWidth="1.5"><circle cx="40" cy="25" r="6" /><circle cx="25" cy="45" r="6" /><circle cx="55" cy="45" r="6" /><circle cx="40" cy="60" r="6" /><path d="M40 31v23M31 45h18M34 39l-6 3M46 39l6 3" /></svg> },
+            { step: "03", title: "The Evolution", desc: "Watch your financial health grow. Receive personalized, actionable insights that turn savings into a habit.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><polyline points="10,60 25,45 35,50 50,30 65,35 75,20" strokeLinejoin="round" /></svg> }
           ].map((panel, i) => (
             <div className="cap-how-panel" key={i}>
               <div className="cap-step-counter"><span>{panel.step}</span> / 03</div>
@@ -342,8 +330,8 @@ export default function LandingPage() {
       <section className="cap-modern" id="modern">
         <div className="cap-modern-inner">
           <div>
-            <h2 className="cap-section-title" style={{ textAlign: "left" }}>Built for Modern Finance</h2>
-            <p>Experience the future of financial management with AI-powered insights, automated tracking, and intelligent recommendations.</p>
+            <h2 className="cap-section-title" style={{ textAlign: "left" }}>Beyond Traditional Finance</h2>
+            <p>We aren't just a ledger. We are a living, breathing financial assistant that evolves as you do. Understand your past, control your present, and predict your future.</p>
             <ul className="cap-modern-list">
               {["Real-time transaction tracking", "AI-powered expense categorization", "Automated budget recommendations", "Smart savings goals", "Multi-currency support", "Bank-level security"].map((b, i) => <li key={i}>{b}</li>)}
             </ul>
@@ -364,21 +352,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="cap-testimonials" id="testimonials">
-        <div className="cap-testimonials-inner">
-          <h2 className="cap-section-title">Loved by Our Users</h2>
-          <div className="cap-testimonial-card" key={testimonialIdx}>
-            <div className="stars">{"★★★★★"}</div>
-            <p className="quote">&ldquo;{t.quote}&rdquo;</p>
-            <div className="author">
-              <div className="cap-avatar">{t.initials}</div>
-              <div><div className="cap-author-name">{t.name}</div><div className="cap-author-role">{t.role}</div></div>
-            </div>
-          </div>
-          <div className="cap-dots">{[0, 1, 2].map(i => <span key={i} className={`cap-dot ${i === testimonialIdx ? "active" : ""}`} onClick={() => setTestimonialIdx(i)} />)}</div>
-        </div>
-      </section>
+
 
       {/* CTA Banner */}
       <section className="cap-cta">
@@ -400,7 +374,7 @@ export default function LandingPage() {
           <div>
             <h4>Product</h4>
             <a href="#features">Features</a>
-            <a href="#testimonials">Testimonials</a>
+            <a href="#how">How it Works</a>
             <a href="/dashboard">Dashboard</a>
           </div>
           <div>
