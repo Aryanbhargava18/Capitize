@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
   const canvasRef = useRef(null);
+  const sceneRef = useRef({});
   const [loaded, setLoaded] = useState(0);
   const [loaderHidden, setLoaderHidden] = useState(false);
 
