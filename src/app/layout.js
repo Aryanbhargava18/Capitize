@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { CurrencyProvider } from "@/contexts/currency-context";
 import { botAj } from "@/lib/arcjet";
 import { request } from "@arcjet/next";
+import { headers } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,11 @@ export default async function RootLayout({ children }) {
     );
   }
 
+  // Detect if we're on the landing page to hide the default header
+  const headersList = await headers();
+  const pathname = headersList.get("x-next-url") || headersList.get("x-invoke-path") || "";
+  const isLandingPage = pathname === "/" || pathname === "";
+
   return (
     <ClerkProvider>
       <CurrencyProvider>
@@ -46,7 +52,7 @@ export default async function RootLayout({ children }) {
             <link rel="icon" href="/logo-sm.png" sizes="any" />
           </head>
           <body className={`${inter.className} flex flex-col min-h-screen`}>
-            <Header />
+            {!isLandingPage && <Header />}
             <main className="flex-1">{children}</main>
             <Toaster richColors />
             {/* <Footer /> */}
