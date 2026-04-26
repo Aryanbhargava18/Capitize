@@ -155,9 +155,14 @@ export default function LandingPage() {
     const cursor = document.getElementById("cap-cursor");
     const onCursorMove = (e) => { if (cursor) gsap.to(cursor, { x: e.clientX - 6, y: e.clientY - 6, duration: 0.1 }); };
     window.addEventListener("mousemove", onCursorMove);
-    document.querySelectorAll("a,button,.cap-btn").forEach(el => {
-      el.addEventListener("mouseenter", () => cursor?.classList.add("hovering"));
-      el.addEventListener("mouseleave", () => cursor?.classList.remove("hovering"));
+    
+    const onEnter = () => cursor?.classList.add("hovering");
+    const onLeave = () => cursor?.classList.remove("hovering");
+    const interactiveEls = document.querySelectorAll("a,button,.cap-btn");
+    
+    interactiveEls.forEach(el => {
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mouseleave", onLeave);
     });
 
     // Animate loop
@@ -193,6 +198,12 @@ export default function LandingPage() {
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("mousemove", onCursorMove);
       window.removeEventListener("resize", onResize);
+      
+      interactiveEls.forEach(el => {
+        el.removeEventListener("mouseenter", onEnter);
+        el.removeEventListener("mouseleave", onLeave);
+      });
+      
       renderer.dispose();
 
       if (ctx) ctx.revert();
@@ -234,11 +245,11 @@ export default function LandingPage() {
           <div>
             <div className="cap-eyebrow"><span className="blink" /> AI-Powered Financial Intelligence</div>
             <h1 className="cap-headline">
-              <span className="word block">Every Transaction</span>
-              <span className="word block mt-2">Tells a Story.</span>
-              <span className="word block mt-2">Let AI Write Yours.</span>
+              <span className="word block">Smart Tracking.</span>
+              <span className="word block mt-2">Clear Insights.</span>
+              <span className="word block mt-2">Better Habits.</span>
             </h1>
-            <p className="cap-subheadline">Move beyond simple expense tracking. Capitize uses cutting-edge AI to understand your financial behavior, uncovering hidden patterns and building a roadmap to your wealth.</p>
+            <p className="cap-subheadline">Get clear, weekly summaries of where your money goes. Capitize automatically categorizes expenses and highlights spending trends so you can stay on top of your budget.</p>
             <div className="cap-hero-ctas">
               <Link href="/dashboard" className="cap-btn cap-btn-primary">Get Started →</Link>
 
@@ -273,8 +284,8 @@ export default function LandingPage() {
           <div className="cap-bento">
             <div className="cap-bento-card card-1">
               <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
-              <h3>See the Unseen</h3>
-              <p>Your spending isn't just numbers. It's a narrative. Our AI connects the dots, predicting trends before they happen.</p>
+              <h3>Weekly Reports</h3>
+              <p>Get automated weekly summaries showing exactly where your money went and how it compares to last week.</p>
               <div style={{ display: "flex", gap: "8px", alignItems: "flex-end", marginTop: "1.5rem", height: "60px" }}>
                 {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (<div key={i} style={{ flex: 1, height: h + "%", background: `linear-gradient(to top, #00f5c4, #7c3aed)`, borderRadius: "4px", opacity: 0.7 }} />))}
               </div>
@@ -287,8 +298,8 @@ export default function LandingPage() {
             </div>
             <div className="cap-bento-card">
               <div className="cap-bento-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 2a10 10 0 0 1 0 20" /></svg></div>
-              <h3>Budgets that Breathe</h3>
-              <p>Static budgets fail. Our AI dynamically adjusts your goals based on your real-time financial rhythm.</p>
+              <h3>Smart Categorization</h3>
+              <p>Automatically group your transactions and see a clear visual breakdown of your spending habits.</p>
               <div className="cap-donut" style={{ marginTop: "1rem" }}><div className="cap-donut-inner" /></div>
             </div>
             <div className="cap-bento-card">
@@ -310,8 +321,8 @@ export default function LandingPage() {
         <div className="cap-how-track">
           {[
             { step: "01", title: "The Connection", desc: "Securely link your financial ecosystem. Bank-grade encryption ensures your peace of mind from day one.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><rect x="10" y="20" width="25" height="40" rx="4" /><rect x="45" y="20" width="25" height="40" rx="4" /><path d="M35 40h10" strokeDasharray="4 4" /></svg> },
-            { step: "02", title: "The Analysis", desc: "Our AI quietly goes to work, organizing chaos into order, categorizing every transaction with deep precision.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#7c3aed" strokeWidth="1.5"><circle cx="40" cy="25" r="6" /><circle cx="25" cy="45" r="6" /><circle cx="55" cy="45" r="6" /><circle cx="40" cy="60" r="6" /><path d="M40 31v23M31 45h18M34 39l-6 3M46 39l6 3" /></svg> },
-            { step: "03", title: "The Evolution", desc: "Watch your financial health grow. Receive personalized, actionable insights that turn savings into a habit.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><polyline points="10,60 25,45 35,50 50,30 65,35 75,20" strokeLinejoin="round" /></svg> }
+            { step: "02", title: "Automatic Sorting", desc: "Your transactions are automatically categorized, giving you a clear, organized picture of your spending.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#7c3aed" strokeWidth="1.5"><circle cx="40" cy="25" r="6" /><circle cx="25" cy="45" r="6" /><circle cx="55" cy="45" r="6" /><circle cx="40" cy="60" r="6" /><path d="M40 31v23M31 45h18M34 39l-6 3M46 39l6 3" /></svg> },
+            { step: "03", title: "Weekly Insights", desc: "Receive weekly reports that highlight where you spent the most and how your habits are changing.", icon: <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#00f5c4" strokeWidth="1.5"><polyline points="10,60 25,45 35,50 50,30 65,35 75,20" strokeLinejoin="round" /></svg> }
           ].map((panel, i) => (
             <div className="cap-how-panel" key={i}>
               <div className="cap-step-counter"><span>{panel.step}</span> / 03</div>
@@ -331,7 +342,7 @@ export default function LandingPage() {
         <div className="cap-modern-inner">
           <div>
             <h2 className="cap-section-title" style={{ textAlign: "left" }}>Beyond Traditional Finance</h2>
-            <p>We aren't just a ledger. We are a living, breathing financial assistant that evolves as you do. Understand your past, control your present, and predict your future.</p>
+            <p>Capitize gives you the clarity you need. Get straightforward weekly reports, track your habits, and manage your budget without the headache.</p>
             <ul className="cap-modern-list">
               {["Real-time transaction tracking", "AI-powered expense categorization", "Automated budget recommendations", "Smart savings goals", "Multi-currency support", "Bank-level security"].map((b, i) => <li key={i}>{b}</li>)}
             </ul>
