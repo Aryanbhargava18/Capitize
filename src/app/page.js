@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const sceneRef = useRef({});
   const [loaded, setLoaded] = useState(0);
   const [loaderHidden, setLoaderHidden] = useState(false);
@@ -91,6 +92,7 @@ export default function LandingPage() {
     }
 
     // Morph on scroll
+    const container = containerRef.current;
     let ctx = gsap.context(() => {
       const morphData = { progress: 0 };
       gsap.to(morphData, {
@@ -113,19 +115,16 @@ export default function LandingPage() {
       });
 
       // Nav compress
-      gsap.to(".cap-nav", { scrollTrigger: { trigger: "body", start: "80px top", toggleActions: "play none none reverse" }, onStart: () => document.querySelector(".cap-nav")?.classList.add("compact"), onReverseComplete: () => document.querySelector(".cap-nav")?.classList.remove("compact") });
+      gsap.to(".cap-nav", { scrollTrigger: { trigger: "body", start: "80px top", toggleActions: "play none none reverse" }, onStart: () => container?.querySelector(".cap-nav")?.classList.add("compact"), onReverseComplete: () => container?.querySelector(".cap-nav")?.classList.remove("compact") });
 
       // Hero text animation (manual word split)
-      const headlineWords = document.querySelectorAll(".cap-headline .word");
-      if (headlineWords.length) {
-        gsap.from(headlineWords, { y: 60, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08, delay: 1.5 });
-      }
+      gsap.from(".cap-headline .word", { y: 60, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08, delay: 1.5 });
       gsap.from(".cap-subheadline", { opacity: 0, y: 20, duration: 0.6, delay: 2.3 });
       gsap.from(".cap-hero-ctas", { opacity: 0, y: 20, duration: 0.6, delay: 2.5 });
       gsap.from(".cap-float-card", { opacity: 0, scale: 0.8, rotateY: -40, duration: 1, delay: 2.7, ease: "power3.out" });
 
       // Section titles reveal
-      document.querySelectorAll(".cap-section-title").forEach(el => {
+      gsap.utils.toArray(".cap-section-title").forEach(el => {
         gsap.from(el, { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 80%" } });
       });
 
@@ -135,8 +134,8 @@ export default function LandingPage() {
       });
 
       // Horizontal scroll
-      const howSection = document.querySelector(".cap-how");
-      const howTrack = document.querySelector(".cap-how-track");
+      const howSection = container?.querySelector(".cap-how");
+      const howTrack = container?.querySelector(".cap-how-track");
       if (howSection && howTrack) {
         gsap.to(howTrack, { x: () => -(howTrack.scrollWidth - window.innerWidth), ease: "none", scrollTrigger: { trigger: howSection, pin: true, scrub: 1, end: () => "+=" + howTrack.scrollWidth } });
       }
@@ -145,7 +144,7 @@ export default function LandingPage() {
       gsap.utils.toArray(".cap-mock-bar-fill").forEach(bar => {
         gsap.from(bar, { width: 0, duration: 1.5, ease: "power2.out", scrollTrigger: { trigger: bar, start: "top 85%" } });
       });
-    });
+    }, container);
 
     // Mouse parallax
     const mouse = { x: 0, y: 0 };
@@ -153,14 +152,14 @@ export default function LandingPage() {
     window.addEventListener("mousemove", onMouse);
 
     // Custom cursor
-    const cursor = document.getElementById("cap-cursor");
+    const cursor = container?.querySelector("#cap-cursor");
     const onCursorMove = (e) => { if (cursor) gsap.to(cursor, { x: e.clientX - 6, y: e.clientY - 6, duration: 0.1 }); };
     window.addEventListener("mousemove", onCursorMove);
-    
+
     const onEnter = () => cursor?.classList.add("hovering");
     const onLeave = () => cursor?.classList.remove("hovering");
-    const interactiveEls = document.querySelectorAll("a,button,.cap-btn");
-    
+    const interactiveEls = container ? container.querySelectorAll("a,button,.cap-btn") : [];
+
     interactiveEls.forEach(el => {
       el.addEventListener("mouseenter", onEnter);
       el.addEventListener("mouseleave", onLeave);
@@ -195,25 +194,28 @@ export default function LandingPage() {
     window.addEventListener("resize", onResize);
 
     return () => {
+      // Revert GSAP context FIRST, before React unmounts DOM nodes
+      if (ctx) ctx.revert();
+
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("mousemove", onCursorMove);
       window.removeEventListener("resize", onResize);
-      
-      interactiveEls.forEach(el => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-      });
-      
-      renderer.dispose();
 
-      if (ctx) ctx.revert();
+      interactiveEls.forEach(el => {
+        try {
+          el.removeEventListener("mouseenter", onEnter);
+          el.removeEventListener("mouseleave", onLeave);
+        } catch (_) { /* node may already be removed */ }
+      });
+
+      renderer.dispose();
     };
   }, [loaded]);
 
 
   return (
-    <>
+    <div ref={containerRef} suppressHydrationWarning>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" strategy="afterInteractive" onLoad={onScriptLoad} />
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" strategy="afterInteractive" onLoad={onScriptLoad} />
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" strategy="afterInteractive" onLoad={onScriptLoad} />
@@ -396,6 +398,6 @@ export default function LandingPage() {
         </div>
         <div className="cap-footer-bottom">© 2025 Capitize. All rights reserved.</div>
       </footer>
-    </>
+    </div>
   );
 }
