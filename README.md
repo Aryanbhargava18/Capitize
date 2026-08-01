@@ -150,6 +150,3 @@ Focused on clean separation of concerns across the codebase.
 
 ---
 
-## Status
-Capitize is actively maintained and deployed in production.
-This project represents my approach to building real-world, scalable web systems.
